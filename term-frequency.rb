@@ -15,9 +15,7 @@ words.each do |word|
   word_frequencies[word] += 1
 end
 
-# Sort words first by frequencies and then by words when two words are having the same frequency.
-# Example value of sorted_word_frequencies:
-#   [["Fee", 12], ["Fum", 2]]
+
 WORD = 0
 FREQUENCY = 1
 sorted_word_frequencies = word_frequencies.to_a.sort do |a, b|
