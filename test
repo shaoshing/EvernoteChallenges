@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# Example: ./test integer-valued-list.rb
+
+require 'open3'
+
+testFile = ARGV[0].to_s
+
+if testFile.empty?
+  puts "Specify the file you want to test"
+  exit 1
+end
+
+output = ""
+expectedOutput = `cat #{testFile.sub(/\.\w+$/, ".output")}`
+
+case testFile
+when /\.rb$/
+  output = %x[cat #{testFile.sub(/\.\w+$/, ".input")} | ruby #{testFile}]
+end
+
+if output == expectedOutput
+  puts "Nailed it!"
+  puts "-------"
+  puts output
+  exit 0
+else
+  puts "Hmm..."
+  puts "------- expected -------"
+  puts expectedOutput
+  puts "------- actual -------"
+  puts output
+  puts "-------"
+  exit 1
+end
