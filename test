@@ -16,6 +16,8 @@ expectedOutput = `cat #{testFile.sub(/\.\w+$/, ".output")}`
 case testFile
 when /\.rb$/
   output = %x[cat #{testFile.sub(/\.\w+$/, ".input")} | ruby #{testFile}]
+when /\.go$/
+  output = %x[cat #{testFile.sub(/\.\w+$/, ".input")} | go run #{testFile}]
 end
 
 if output == expectedOutput
