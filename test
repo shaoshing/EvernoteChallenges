@@ -18,6 +18,10 @@ when /\.rb$/
   output = %x[cat #{testFile.sub(/\.\w+$/, ".input")} | ruby #{testFile}]
 when /\.go$/
   output = %x[cat #{testFile.sub(/\.\w+$/, ".input")} | go run #{testFile}]
+when /\.java$/
+  %x[cp #{testFile} Solution.java && javac Solution.java]
+  output = %x[cat #{testFile.sub(/\.\w+$/, ".input")} | java Solution]
+  %x[rm Solution*]
 end
 
 if output == expectedOutput
