@@ -57,26 +57,22 @@ func (this *Buffer) Add(items []string) {
 		if this.size == 0 {
 			this.startOfBuffer = 0
 			this.endOfBuffer = 0
+			this.size = 1
 		} else {
 			if this.size == this.maxSize {
 				this.startOfBuffer = (this.startOfBuffer + 1) % this.maxSize
 				this.size--
 			}
 			this.endOfBuffer = (this.endOfBuffer + 1) % this.maxSize
+			this.size++
 		}
 		this.pool[this.endOfBuffer] = item
-		this.size++
 	}
 }
 
 func (this *Buffer) Remove(count int16) {
-	for i := int16(0); i < count; i++ {
-		if this.size == 0 {
-			return
-		}
-		this.startOfBuffer = (this.startOfBuffer + 1) % this.maxSize
-		this.size--
-	}
+	this.size -= count
+	this.startOfBuffer = (this.startOfBuffer + count) % this.maxSize
 }
 
 func (this *Buffer) ReadAt(index int16) string {

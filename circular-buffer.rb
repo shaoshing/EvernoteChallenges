@@ -27,18 +27,13 @@ class CircularBuffer
   end
 
   def remove( removalCount )
-    return if @buffer_size == 0
-    if @buffer_size == removalCount
-      @buffer_size = 0
-    else
-      @start_of_buffer = (@start_of_buffer+removalCount)%@buffer_max_size
-      @buffer_size -= removalCount
-    end
+    @buffer_size -= removalCount
+    @start_of_buffer = (@start_of_buffer+removalCount) % @buffer_max_size
   end
 
   def list
     @buffer_size.times do |n|
-      index = (@start_of_buffer+n)%@buffer_max_size
+      index = (@start_of_buffer+n) % @buffer_max_size
       puts @buffer[index]
     end
   end
